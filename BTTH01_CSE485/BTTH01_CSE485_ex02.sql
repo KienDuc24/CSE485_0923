@@ -19,10 +19,10 @@ CREATE TABLE baiviet (
     ten_bhat VARCHAR(100) NOT NULL,
     ma_tloai INT UNSIGNED NOT NULL,
     tomtat TEXT NOT NULL,
-    noidung text,
+    noidung TEXT,
     ma_tgia INT UNSIGNED NOT NULL,
-    ngayviet DATETIME,
+    ngayviet DATETIME DEFAULT CURRENT_TIMESTAMP,
     hinhanh VARCHAR(200),
-    FOREIGN KEY (ma_tgia) REFERENCES baiviet(ma_tgia),
+    FOREIGN KEY (ma_tgia) REFERENCES tacgia(ma_tgia),
     FOREIGN KEY (ma_tloai) REFERENCES theloai(ma_tloai)
 );
