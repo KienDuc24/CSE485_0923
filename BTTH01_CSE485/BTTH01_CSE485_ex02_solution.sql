@@ -82,42 +82,43 @@
     DELIMITER ;
 
 -- k. Thêm mới cột SLBaiViet vào trong bảng theloai. Tạo 1 trigger có tên tg_CapNhatTheLoai để khi thêm/sửa/xóa bài viết thì số lượng bài viết trong bảng theloai được cập nhật theo. (2 đ)
-ALTER TABLE theloai ADD COLUMN SLBaiViet INT DEFAULT 0;
+    ALTER TABLE theloai ADD COLUMN SLBaiViet INT DEFAULT 0;
 
-DELIMITER //
+    DELIMITER //
 
-CREATE TRIGGER tg_CapNhatTheLoai_AfterInsert
-AFTER INSERT ON baiviet
-FOR EACH ROW
-BEGIN
-    UPDATE theloai
-    SET SLBaiViet = SLBaiViet + 1
-    WHERE ma_tloai = NEW.ma_tloai;
-END //
+    CREATE TRIGGER tg_CapNhatTheLoai_AfterInsert
+    AFTER INSERT ON baiviet
+    FOR EACH ROW
+    BEGIN
+        UPDATE theloai
+        SET SLBaiViet = SLBaiViet + 1
+        WHERE ma_tloai = NEW.ma_tloai;
+    END //
 
-CREATE TRIGGER tg_CapNhatTheLoai_AfterUpdate
-AFTER UPDATE ON baiviet
-FOR EACH ROW
-BEGIN
-    UPDATE theloai
-    SET SLBaiViet = SLBaiViet + 1
-    WHERE ma_tloai = NEW.ma_tloai;
-    
-    UPDATE theloai
-    SET SLBaiViet = SLBaiViet - 1
-    WHERE ma_tloai = OLD.ma_tloai;
-END //
+    CREATE TRIGGER tg_CapNhatTheLoai_AfterUpdate
+    AFTER UPDATE ON baiviet
+    FOR EACH ROW
+    BEGIN
+        UPDATE theloai
+        SET SLBaiViet = SLBaiViet + 1
+        WHERE ma_tloai = NEW.ma_tloai;
+        
+        UPDATE theloai
+        SET SLBaiViet = SLBaiViet - 1
+        WHERE ma_tloai = OLD.ma_tloai;
+    END //
 
-CREATE TRIGGER tg_CapNhatTheLoai_AfterDelete
-AFTER DELETE ON baiviet
-FOR EACH ROW
-BEGIN
-    UPDATE theloai
-    SET SLBaiViet = SLBaiViet - 1
-    WHERE ma_tloai = OLD.ma_tloai;
-END //
+    CREATE TRIGGER tg_CapNhatTheLoai_AfterDelete
+    AFTER DELETE ON baiviet
+    FOR EACH ROW
+    BEGIN
+        UPDATE theloai
+        SET SLBaiViet = SLBaiViet - 1
+        WHERE ma_tloai = OLD.ma_tloai;
+    END //
 
-DELIMITER ;
+    DELIMITER ;
+
 -- l. Bổ sung thêm bảng Users để lưu thông tin Tài khoản đăng nhập và sử dụng cho chức năng Đăng nhập/Quản trị trang web. (5 đ)
     CREATE TABLE users (
         id INT PRIMARY KEY AUTO_INCREMENT,
